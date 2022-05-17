@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+    </head>
+<body>
+  <h1 class="text-center">Dynamic Table</h1>
+<h1 class="text-center">data load from fakeerapi using ajax <br>filter is used for geeting data id greater than 5</h1>
+    <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">First Name</th>
+            <th scope="col">Last Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+          </tr>
+        </thead>
+        <tbody id="show">
+         
+        
+
+        </tbody>
+      </table>
+
+</body>
+
+<script>
+ 
+  const xhttp = new XMLHttpRequest();
+  const id = document.getElementById('id');
+  const email = document.getElementById('email');
+  const show = document.getElementById('show');
+
+
+  xhttp.addEventListener('load',function() {
+    const data = this.responseText;
+  const objdata = JSON.parse(data);
+  console.log(objdata);
+  const filt = objdata.data.filter(element => {
+       return element.id > 5 ;
+   });
+   filt.forEach(element => {
+       show.innerHTML += `<tr><td>${element.id}</td><td>${element.firstname}</td><td>${element.lastname}</td><td>${element.email}</td><td>${element.phone}</td></tr>`;
+      
+
+
+   });
+    }) 
+  xhttp.open("GET", "https://fakerapi.it/api/v1/persons?_locale=fr_FR", true);
+  xhttp.send();
+
+
+
+</script>
+
+
+</html>
